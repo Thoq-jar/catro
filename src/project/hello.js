@@ -17,3 +17,8 @@ function update(deltaTime) {
 function handleEvent(event) {
     //todo: write example
 }
+
+// `draw` is used for drawing the scene and showing cool things!
+function draw(context) {
+    //todo: write example
+}
