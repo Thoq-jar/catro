@@ -22,6 +22,7 @@ pub fn create_project(directory: PathBuf, config: ProjectGameConfig) {
     let init = INIT_JS;
     let (width, height) = config.window_size;
     let resizable = config.resizable;
+    //todo: generate nicer
     let config = format!(
         "globalThis.config = {{\n    name: {name_literal},\n    windowSize: {{ width: {width}, height: {height} }},\n    resizable: {resizable},\n}};\n"
     );

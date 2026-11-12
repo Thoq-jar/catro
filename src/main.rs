@@ -1,13 +1,19 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
 
+mod helpers;
 mod project;
 mod scripting;
 mod ui;
 
-use crate::ui::welcome::CatroApp;
+use std::{env, path::PathBuf};
+
+use crate::ui::{editor::CatroEditorApp, welcome::CatroApp};
 
 fn main() -> eframe::Result {
     // let (mut rl, thread) = raylib::init().size(640, 480).title("Hello, World").build();
+
+    // Path to a project to open as optional argument.
+    let project_path = env::args().nth(1).map(PathBuf::from);
 
     env_logger::init();
     let options = eframe::NativeOptions {
@@ -21,7 +27,10 @@ fn main() -> eframe::Result {
             // This gives us image support:
             egui_extras::install_image_loaders(&cc.egui_ctx);
 
-            Ok(Box::<CatroApp>::default())
+            match project_path {
+                Some(path) => Ok(Box::new(CatroEditorApp::new(path)) as Box<dyn eframe::App>),
+                None => Ok(Box::<CatroApp>::default()),
+            }
         }),
     )
     // while !rl.window_should_close() {
